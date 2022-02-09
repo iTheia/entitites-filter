@@ -5,6 +5,7 @@ import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { swaggerConfig } from './config';
 import * as bodyParser from 'body-parser';
+import { AllExceptionsFilter } from '@middlewares/filters';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-docs', app, document);
   app.setGlobalPrefix('api/v1', { exclude: ['version', 'api-docs', ''] });
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new AllExceptionsFilter());
   app.use(bodyParser.json({ limit: '200mb' }));
   app.use(bodyParser.urlencoded({ limit: '200mb', extended: true }));
   await app.listen(config.get('port'));

@@ -1,7 +1,7 @@
 import { IsInt, Max, Min } from 'class-validator';
 
 export class FilterBodyDto {
-  @IsInt({})
+  @IsInt()
   @Min(0)
   @Max(20)
   startId: number;
