@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RedisModule } from 'nestjs-redis';
 import { config, ConfigValidationSchema, redisConfig } from './config';
 import { EntitiesModule } from './modules/entities/entities.module';
 @Module({
@@ -8,6 +9,10 @@ import { EntitiesModule } from './modules/entities/entities.module';
       isGlobal: true,
       load: [config, redisConfig],
       validationSchema: ConfigValidationSchema,
+    }),
+    RedisModule.forRootAsync({
+      useFactory: (config: ConfigService) => config.get('redis'),
+      inject: [ConfigService],
     }),
     EntitiesModule,
   ],
