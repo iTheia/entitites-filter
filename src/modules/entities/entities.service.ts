@@ -9,7 +9,8 @@ export class EntitiesService {
     const response = [];
     for (let index = dto.startId; index <= dto.endId; index++) {
       const { data } = await axios.get(ENTITIES_URL + index);
-      response.push(data);
+      delete data.data.ipAddress;
+      response.push(data.data);
     }
     return response;
   }
