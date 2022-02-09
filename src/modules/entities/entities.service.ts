@@ -1,4 +1,3 @@
-import { ENTITIES_URL } from '@const/data';
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { FilterBodyDto } from './dto';
@@ -20,7 +19,9 @@ export class EntitiesService {
       const registered = await this.client.get(index.toString());
       let body = registered ? JSON.parse(registered) : {};
       if (!registered) {
-        const { data } = await axios.get(ENTITIES_URL + index);
+        const { data } = await axios.get(
+          this.config.get('entititesUrl') + index,
+        );
         delete data.data.ipAddress;
         body = data.data;
         await this.client.set(index.toString(), JSON.stringify(body));
