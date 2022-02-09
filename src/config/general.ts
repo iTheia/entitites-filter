@@ -4,5 +4,4 @@ dotenv.config();
 
 export const config = () => ({
   port: parseInt(process.env.PORT),
-  entititesUrl: process.env.ENTITIES_URL,
 });

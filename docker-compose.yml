@@ -1,0 +1,40 @@
+version: '3.5'
+services:
+  api:
+    image: entities/api
+    container_name: entities-api
+    hostname: transfer
+    restart: always
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    command: npm run start:dev
+    env_file:
+      - ./.env
+    networks:
+      - entities_network
+    depends_on:
+      - redis
+  redis:
+    image: redis:6.2
+    container_name: redis
+    restart: always
+    ports:
+      - '6380:6380'
+    networks:
+      - entities_network
+
+volumes:
+  redis:
+    driver: local
+
+networks:
+  entities_network:
+    name: entities_network
+    driver: bridge

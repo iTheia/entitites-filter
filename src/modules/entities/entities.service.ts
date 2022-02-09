@@ -4,6 +4,7 @@ import { FilterBodyDto } from './dto';
 import { RedisService } from 'nestjs-redis';
 import { Redis } from 'ioredis';
 import { ConfigService } from '@nestjs/config';
+import { ENTITITES_URL } from '@const/url';
 @Injectable()
 export class EntitiesService {
   private client: Redis;
@@ -19,9 +20,7 @@ export class EntitiesService {
       const registered = await this.client.get(index.toString());
       let body = registered ? JSON.parse(registered) : {};
       if (!registered) {
-        const { data } = await axios.get(
-          this.config.get('entititesUrl') + index,
-        );
+        const { data } = await axios.get(ENTITITES_URL + index);
         delete data.data.ipAddress;
         body = data.data;
         await this.client.set(index.toString(), JSON.stringify(body));
