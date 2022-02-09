@@ -25,3 +25,10 @@ Es necesario contar con las siguientes herramientas instaladas en tu equipo, ant
   - `npm i`
   - `docker-compose build`
   - `docker-compose up -d`
+
+- ### Endpoints
+  una vez disponible el servidor los endpoints disponibles son
+  - GET /api-docs
+  - POST /api/v1/entities/filter
+  - GET /version
+  - GET /
