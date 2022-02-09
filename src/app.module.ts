@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisModule } from 'nestjs-redis';
 import { config, ConfigValidationSchema, redisConfig } from './config';
 import { EntitiesModule } from './modules/entities/entities.module';
+import { AdditionalModule } from './modules/additional/additional.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,6 +16,7 @@ import { EntitiesModule } from './modules/entities/entities.module';
       inject: [ConfigService],
     }),
     EntitiesModule,
+    AdditionalModule,
   ],
 })
 export class AppModule {}
